@@ -152,10 +152,12 @@ public class RentalManageController {
                 result.addError(fielderror);
                 throw new Exception("Validation error.");
             }
+            
             if (result.hasErrors()) {
                 throw new Exception("Validation error.");
             }
             // 登録処理
+            rentalManageDto.dateCheck();
             rentalManageService.update(Long.valueOf(id), rentalManageDto);
 
             return "redirect:/rental/index";
@@ -170,7 +172,8 @@ public class RentalManageController {
 
             ra.addFlashAttribute("rentalManageDto", rentalManageDto);
             ra.addFlashAttribute("org.springframework.validation.BindingResult.rentalManageDto", result);
-
+            ra.addFlashAttribute("error1", e.getMessage());
+            
             return "redirect:/rental/"+id+"/edit";
         }
     }
